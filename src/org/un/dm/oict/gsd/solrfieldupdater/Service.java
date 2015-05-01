@@ -34,6 +34,10 @@ import au.com.bytecode.opencsv.CSVReader;
  */
 public class Service {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		String csvFilename = "";
@@ -82,9 +86,20 @@ public class Service {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param solr
+	 * @param idFieldName
+	 * @param updateFieldName
+	 * @param id
+	 * @param updateField
+	 * @param count
+	 */
 	static void updateDocument(HttpSolrServer solr, String idFieldName, String updateFieldName, String id, String updateField, int count) {
 		SolrInputDocument doc = new SolrInputDocument();
 		Map<String, String> partialUpdate = new HashMap<String, String>();
+		if (updateFieldName.equals("url"))
+			updateField = updateField.replaceAll("amp;", "");
 		partialUpdate.put("set", updateField);
 		doc.addField(idFieldName, id);
 		doc.addField(updateFieldName, partialUpdate);
@@ -103,8 +118,16 @@ public class Service {
 	
 }
 
+/**
+ * 
+ * @author kevinbradley
+ *
+ */
 class PreemptiveAuthInterceptor implements HttpRequestInterceptor {
 
+	/**
+	 * 
+	 */
     public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
         AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
 
