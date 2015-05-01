@@ -32,6 +32,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * i.e. id, url in urls.csv. It will loop through the csv file and update each corresponding Solr documents
  * url.
  */
+@SuppressWarnings("deprecation")
 public class Service {
 
 	/**
@@ -119,16 +120,17 @@ public class Service {
 }
 
 /**
- * 
- * @author kevinbradley
- *
+ * @author Kevin T Bradley
+ * @dateCreated 01 September 2014
+ * @description This class is used for preemptive authorization with an HTTP host
  */
+@SuppressWarnings("deprecation")
 class PreemptiveAuthInterceptor implements HttpRequestInterceptor {
 
 	/**
 	 * 
 	 */
-    public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
         AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
 
         if (authState.getAuthScheme() == null) {
